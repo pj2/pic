@@ -1,0 +1,30 @@
+#############
+## Windows detritus
+#############
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Mac crap
+.DS_Store
+
+#################
+## MPLab
+#################
+
+# Build files
+*.O
+*.err
+*.HEX
+*.lst
+*.map
+*.cof
+*.mcw
+*.mcs
