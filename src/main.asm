@@ -48,33 +48,25 @@ SWITCHES:
 	GOTO SWITCHES
 
 ; Task 4 - Activates X lights where X is the number of pressed buttons.
-; FIXME
 COUNT:
-	MOVLW	0x05
-	MOVWF	acc1		; acc1 = 5
-
 	MOVF	PORTA, 0	; Read input into W
 	XORLW	0x0F		; Flip input and keep the bottom 4 bits
+	MOVWF	acc1		; acc1 = W
 
-COUNT_COUNT:
-	RRF		W, 1		; Rotate one bit out, store in W
-	BTFSC	STATUS, C	; If the carried out bit was 0 (off), skip incrementing
-	DECF	acc1, 1		; acc1--
+	MOVLW	0x0F		; W = all lights
+	BTFSS	acc1, 0x01	; Test bit 1
+	RRF		W, 1		
 
-	IORLW	0x00		; 
-	BTFSC	STATUS, Z	; Check if W is zero
-	GOTO	COUNT_COUNT	; Not zero, continue counting
-	
-						; acc1 contains number of active lights
-	MOVLW	0x0F		; All lights on
-	
-COUNT_MASK:
-	DECFSZ	acc1		; Loop acc1 - 1 times
-						; Build output mask		
-	RRF		W, 1		; Shift W right
-	GOTO	COUNT_MASK
+	BTFSS	acc1, 0x02	; Test bit 2
+	RRF		W, 1
 
-	MOVWF	PORTA
+	BTFSS	acc1, 0x04	; Test bit 3
+	RRF		W, 1
+
+	BTFSS	acc1, 0x08	; Test bit 4
+	RRF 	W, 1
+
+	MOVWF	PORTB		; PORTB = W
 
 	GOTO 	COUNT
 	END					; Listing end
