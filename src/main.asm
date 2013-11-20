@@ -22,6 +22,7 @@ INIT:
 	
 	BCF		STATUS, RP0	; Use Bank0 again
 	CLRF	PORTA		; Clear PORTA
+	CLRF	W			; Clear W
 
 	GOTO	COUNT		; Goto main body
 
@@ -69,4 +70,22 @@ COUNT:
 	MOVWF	PORTB		; PORTB = W
 
 	GOTO 	COUNT
+
+; Task 5 - Counts from 0 to 255 infinitely.
+BINARY:
+	MOVWF	PORTB		; PORTB = W
+
+	INCF	W			; W++
+
+	XORLW	0xFF
+	BTFSC	STATUS, Z	; Check if W = 255
+	CLRF	W			; W = 0
+	
+	GOTO BINARY
+
+
+
+
+
 	END					; Listing end
+
